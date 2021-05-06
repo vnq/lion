@@ -18,7 +18,7 @@ import { dedupeMixin } from '@lion/core';
  * `updateSync` will only be called when new value differs from old value.
  * See: https://lit-element.polymer-project.org/guide/lifecycle#haschanged
  * - it is a stable abstraction on top of a protected/non official lifecycle LitElement api.
- * Whenever the implementation of `requestUpdateInternal` changes (this happened in the past for
+ * Whenever the implementation of `requestUpdate` changes (this happened in the past for
  * `requestUpdate`) we only have to change our abstraction instead of all our components
  * @type {SyncUpdatableMixin}
  * @param {import('@open-wc/dedupe-mixin').Constructor<import('@lion/core').LitElement>} superclass
@@ -64,7 +64,7 @@ const SyncUpdatableMixinImplementation = superclass =>
      */
     static __syncUpdatableHasChanged(name, newValue, oldValue) {
       // @ts-expect-error [external]: accessing private lit property
-      const properties = this._classProperties;
+      const properties = this.elementProperties;
       if (properties.get(name) && properties.get(name).hasChanged) {
         return properties.get(name).hasChanged(newValue, oldValue);
       }
@@ -93,8 +93,8 @@ const SyncUpdatableMixinImplementation = superclass =>
      * @param {string} name
      * @param {*} oldValue
      */
-    requestUpdateInternal(name, oldValue) {
-      super.requestUpdateInternal(name, oldValue);
+    requestUpdate(name, oldValue) {
+      super.requestUpdate(name, oldValue);
 
       this.__SyncUpdatableNamespace = this.__SyncUpdatableNamespace || {};
       const ns = this.__SyncUpdatableNamespace;
@@ -114,7 +114,7 @@ const SyncUpdatableMixinImplementation = superclass =>
     }
 
     /**
-     * An abstraction that has the exact same api as `requestUpdateInternal`, but taking
+     * An abstraction that has the exact same api as `requestUpdate`, but taking
      * into account:
      * - [member order independence](https://github.com/webcomponents/gold-standard/wiki/Member-Order-Independence)
      * - property effects start when all (light) dom has initialized (on firstUpdated)
@@ -122,7 +122,7 @@ const SyncUpdatableMixinImplementation = superclass =>
      * - compatible with propertyAccessor.`hasChanged`: no manual checks needed or accidentally
      * run property effects / events when no change happened
      * effects when values didn't change
-     * All code previously present in requestUpdateInternal can be placed in this method.
+     * All code previously present in requestUpdate can be placed in this method.
      * @param {string} name
      * @param {*} oldValue
      */

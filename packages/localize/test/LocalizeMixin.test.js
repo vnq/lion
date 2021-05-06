@@ -1,4 +1,4 @@
-import { isDirective, LitElement } from '@lion/core';
+import { isDirectiveResult, LitElement } from '@lion/core';
 import {
   aTimeout,
   defineCE,
@@ -292,7 +292,7 @@ describe('LocalizeMixin', () => {
     const messageDirective = el.msgLit('my-element:greeting');
     expect(lionLocalizeMessageSpy.callCount).to.equal(0);
 
-    expect(isDirective(messageDirective)).to.be.true;
+    expect(isDirectiveResult(messageDirective)).to.be.true;
 
     await aTimeout(1); // wait for directive to "resolve"
 
@@ -329,7 +329,7 @@ describe('LocalizeMixin', () => {
     const el = /** @type {MyElement} */ (document.createElement(tagString));
 
     const messageDirective = el.msgLit('my-element:greeting');
-    expect(isDirective(messageDirective)).to.be.true;
+    expect(isDirectiveResult(messageDirective)).to.be.true;
 
     await el.localizeNamespacesLoaded;
     expect(el.msgLit('my-element:greeting')).to.equal('Hi!');
