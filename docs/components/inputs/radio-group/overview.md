@@ -11,7 +11,7 @@ import '@lion/radio-group/define';
 
 ```js preview-story
 export const main = () => html`
-  <lion-radio-group name="dinos" label="What are your favourite dinosaurs?">
+  <lion-radio-group name="dinos" label="What is your favourite dinosaur?">
     <lion-radio label="allosaurus" .choiceValue=${'allosaurus'}></lion-radio>
     <lion-radio label="brontosaurus" .choiceValue=${'brontosaurus'}></lion-radio>
     <lion-radio label="diplodocus" .choiceValue=${'diplodocus'}></lion-radio>
