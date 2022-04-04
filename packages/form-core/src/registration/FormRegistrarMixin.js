@@ -164,6 +164,10 @@ const FormRegistrarMixinImplementation = superclass =>
           console.info('Error Node:', child); // eslint-disable-line no-console
           throw new TypeError(`You can not have the same name "${name}" as your parent`);
         }
+        if (typeof this.formElements[name] === 'function') {
+          console.info('Error Node:', child); // eslint-disable-line no-console
+          throw new TypeError(`You can not use the name "${name}" as it is used by Array methods`);
+        }
 
         if (name.substr(-2) === '[]') {
           if (!Array.isArray(this.formElements[name])) {
